@@ -1,16 +1,5 @@
 import endPoints from "./endpoints";
 
-// Option 1: Using promise.then chaining
-// const parseData = url => {
-//   return fetch(url)
-//     .then(data => data.json())
-//     .catch(e => {
-//       console.log("fetching data failed");
-//       throw e;
-//     });
-// };
-
-// Option 2: Using async and await
 const loadData = async url => {
   try {
     const response = await fetch(url);

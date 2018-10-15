@@ -7,7 +7,7 @@ import { createStore, compose } from "redux";
 import { Provider } from "react-redux";
 import rootReducer, { fetchBooksSuccess, search } from "./redux/rootReducer";
 
-// 1. Install redux dev tools
+// Step 1. Install redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // Compose rootReducer as part of the store

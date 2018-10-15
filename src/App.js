@@ -40,7 +40,6 @@ class App extends Component {
   }
 
   _handleSearchOnChange = event => {
-    console.log(event.target.value);
     const searchTerm = event.target.value.toLowerCase();
     this.props.search(searchTerm);
     this._fetchData(searchTerm);
@@ -88,5 +87,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchBooksSuccess, search }
+  { fetchBooksSuccess, search } // mapDispatchToProp
 )(App);
