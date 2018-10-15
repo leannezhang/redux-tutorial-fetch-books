@@ -1,1 +1,3 @@
-// Where we combine reducers
+export default function reducers() {
+  return { name: "leanne" };
+}
