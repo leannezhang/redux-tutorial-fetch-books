@@ -7,11 +7,20 @@ import { createStore, compose } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./redux/rootReducer";
 
+// 1. Install redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = composeEnhancers()(createStore)(rootReducer);
+
+// Store has dispatch, getState, subscribe() methods
 console.log("store", store);
 
-ReactDOM.render(<App />, document.getElementById("root"));
+// Provider subsribes to store and update the UI when states changes
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
