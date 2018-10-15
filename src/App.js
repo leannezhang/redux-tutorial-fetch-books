@@ -6,7 +6,7 @@ import { fetchBooksSuccess, search } from "./redux/rootReducer";
 
 class App extends Component {
   state = {
-    loadingStatus: "loading" // loading, loaded, failed
+    isLoading: true
   };
 
   componentDidMount() {
@@ -18,11 +18,10 @@ class App extends Component {
       const response = await queryByAuthor(searchTerm);
       this.props.fetchBooksSuccess(response);
       if (response) {
-        this.setState({ loadingStatus: "loaded" });
+        this.setState({ isLoading: false });
       }
     } catch (e) {
       console.error("failed to fetch");
-      this.setState({ loadingStatus: "failed" });
     }
   };
 
@@ -30,11 +29,7 @@ class App extends Component {
     return (
       <div className="App">
         {this._renderSearchBar()}
-        {this.state.loadingStatus === "loading"
-          ? this.state.loadingStatus
-          : null}
-        {this._renderBooks()}
-        {this.state.loadingStatus === "failed" && this._renderErrorMessage()}
+        {this.state.isLoading ? "loading..." : this._renderBooks()}
       </div>
     );
   }
@@ -73,10 +68,6 @@ class App extends Component {
       </ul>
     );
   }
-
-  _renderErrorMessage() {
-    return <div>Error in loading data</div>;
-  }
 }
 
 // Step 3: Connect your component to redux state
@@ -87,5 +78,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchBooksSuccess, search } // mapDispatchToProp
+  { fetchBooksSuccess, search } // mapDispatchToProps
 )(App);

@@ -1,8 +1,8 @@
 // Step 2: Create actions and reducers
 // You can call the actions from the component or the store
 
-// Set up initial states
-const initialStates = {
+// Set up initial state
+const initialState = {
   books: [],
   searchTerm: ""
 };
@@ -21,8 +21,8 @@ export const search = payload => ({
   payload
 });
 
-// Reducer takes in initialStates and an action object
-export default function reducers(state = initialStates, action) {
+// Reducer takes in initialState and an action object
+export default function reducers(state = initialState, action) {
   switch (action.type) {
     case FETCH_BOOKS_SUCCEEDED:
       return { ...state, books: action.payload };
