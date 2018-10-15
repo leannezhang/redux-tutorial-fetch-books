@@ -5,7 +5,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { createStore, compose } from "redux";
 import { Provider } from "react-redux";
-import rootReducer from "./redux/rootReducer";
+import rootReducer, { fetchBooksSuccess, search } from "./redux/rootReducer";
 
 // Step 1. Install redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -18,8 +18,9 @@ const store = composeEnhancers()(createStore)(rootReducer);
 
 // console.log("store", store);
 // console.log("store", store.getState());
-// store.dispatch(fetchBooksSuccess());
-// store.dispatch(search());
+// store.dispatch(fetchBooksSuccess(["my book"]));
+// store.dispatch(search("youuuu"));
+// console.log(store.getState());
 
 // Provider subsribes to store and update the UI when states changes
 ReactDOM.render(
