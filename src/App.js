@@ -1,29 +1,30 @@
 import React, { Component } from "react";
 import "./App.css";
 import { queryByAuthor } from "./Api";
+import { connect } from "react-redux";
+import { fetchBooksSuccess, search } from "./redux/rootReducer";
 
 class App extends Component {
   state = {
-    books: [],
-    searchTerm: "",
     loadingStatus: "loading" // loading, loaded, failed
   };
 
   componentDidMount() {
-    this._fetchData(this.state.searchTerm);
+    this._fetchData(this.props.searchTerm);
   }
 
-  async _fetchData(searchTerm) {
+  _fetchData = async searchTerm => {
     try {
       const response = await queryByAuthor(searchTerm);
-      if (response.items) {
-        this.setState({ books: response.items, loadingStatus: "loaded" });
+      this.props.fetchBooksSuccess(response);
+      if (response) {
+        this.setState({ loadingStatus: "loaded" });
       }
     } catch (e) {
       console.error("failed to fetch");
-      this.setState({ books: [], loadingStatus: "failed" });
+      this.setState({ loadingStatus: "failed" });
     }
-  }
+  };
 
   render() {
     return (
@@ -39,8 +40,9 @@ class App extends Component {
   }
 
   _handleSearchOnChange = event => {
+    console.log(event.target.value);
     const searchTerm = event.target.value.toLowerCase();
-    this.setState({ searchTerm });
+    this.props.search(searchTerm);
     this._fetchData(searchTerm);
   };
 
@@ -50,7 +52,7 @@ class App extends Component {
         Search Author:{" "}
         <input
           type="text"
-          value={this.state.searchTerm}
+          value={this.props.searchTerm}
           onChange={this._handleSearchOnChange}
         />
       </div>
@@ -58,14 +60,11 @@ class App extends Component {
   }
 
   _renderBooks() {
-    const { books } = this.state;
-
-    const booksWithTitles = books.map(book => {
-      if (book) {
-        return book.volumeInfo.title.toLowerCase();
-      }
-      return null;
-    });
+    const { books } = this.props;
+    let booksWithTitles = [];
+    if (books) {
+      booksWithTitles = books.map(book => book.volumeInfo.title.toLowerCase());
+    }
 
     return (
       <ul>
@@ -81,4 +80,13 @@ class App extends Component {
   }
 }
 
-export default App;
+// Step 3: Connect your component to redux state
+const mapStateToProps = state => ({
+  books: state.books,
+  searchTerm: state.searchTerm
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchBooksSuccess, search }
+)(App);

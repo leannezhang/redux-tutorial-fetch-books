@@ -14,7 +14,8 @@ import endPoints from "./endpoints";
 const loadData = async url => {
   try {
     const response = await fetch(url);
-    return response.json();
+    const json = await response.json();
+    return json.items;
   } catch (e) {
     throw new Error(e);
   }
