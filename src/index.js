@@ -15,6 +15,7 @@ const store = composeEnhancers()(createStore)(rootReducer);
 
 // Step 2.1
 // Store has dispatch(), getState(), subscribe() methods
+
 // console.log("store", store);
 // console.log("store", store.getState());
 // store.dispatch(fetchBooksSuccess());
